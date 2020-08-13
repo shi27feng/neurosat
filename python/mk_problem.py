@@ -16,19 +16,24 @@
 import numpy as np
 import math
 
+
 # TODO(dhs): duplication
 def ilit_to_var_sign(x):
-    assert(abs(x) > 0)
+    assert (abs(x) > 0)
     var = abs(x) - 1
     sign = x < 0
     return var, sign
 
+
 # TODO(dhs): duplication
 def ilit_to_vlit(x, n_vars):
-    assert(x != 0)
+    assert (x != 0)
     var, sign = ilit_to_var_sign(x)
-    if sign: return var + n_vars
-    else: return var
+    if sign:
+        return var + n_vars
+    else:
+        return var
+
 
 class Problem(object):
     def __init__(self, n_vars, iclauses, is_sat, n_cells_per_batch, all_dimacs):
@@ -54,15 +59,20 @@ class Problem(object):
                 self.L_unpack_indices[cell, :] = [vlit, clause_idx]
                 cell += 1
 
-        assert(cell == self.n_cells)
+        assert (cell == self.n_cells)
+
 
 def shift_ilit(x, offset):
-    assert(x != 0)
-    if x > 0: return x + offset
-    else:     return x - offset
+    assert (x != 0)
+    if x > 0:
+        return x + offset
+    else:
+        return x - offset
+
 
 def shift_iclauses(iclauses, offset):
     return [[shift_ilit(x, offset) for x in iclause] for iclause in iclauses]
+
 
 def mk_batch_problem(problems):
     all_iclauses = []
@@ -73,7 +83,7 @@ def mk_batch_problem(problems):
 
     prev_n_vars = None
     for dimacs, n_vars, iclauses, is_sat in problems:
-        assert(prev_n_vars is None or n_vars == prev_n_vars)
+        assert (prev_n_vars is None or n_vars == prev_n_vars)
         prev_n_vars = n_vars
 
         all_iclauses.extend(shift_iclauses(iclauses, offset))

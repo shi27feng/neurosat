@@ -24,6 +24,7 @@ import sys
 from solver import solve_sat
 from mk_problem import mk_batch_problem
 
+
 def parse_dimacs(filename):
     with open(filename, 'r') as f:
         lines = f.readlines()
@@ -31,15 +32,17 @@ def parse_dimacs(filename):
     while lines[i].strip().split(" ")[0] == "c":
         i += 1
     header = lines[i].strip().split(" ")
-    assert(header[0] == "p")
+    assert (header[0] == "p")
     n_vars = int(header[2])
-    iclauses = [[int(s) for s in line.strip().split(" ")[:-1]] for line in lines[i+1:]]
+    iclauses = [[int(s) for s in line.strip().split(" ")[:-1]] for line in lines[i + 1:]]
     return n_vars, iclauses
+
 
 def mk_dataset_filename(opts, n_batches):
     dimacs_path = opts.dimacs_dir.split("/")
     dimacs_dir = dimacs_path[-1] if dimacs_path[-1] != "" else dimacs_path[-2]
     return "%s/data_dir=%s_npb=%d_nb=%d.pkl" % (opts.out_dir, dimacs_dir, opts.max_nodes_per_batch, n_batches)
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('dimacs_dir', action='store', type=str)

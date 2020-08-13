@@ -15,6 +15,7 @@
 
 import numpy as np
 
+
 class ConfusionMatrix(object):
     def __init__(self):
         self.ff = 0
@@ -36,7 +37,7 @@ class ConfusionMatrix(object):
         elif actual and (not predicted):
             self.tf += 1
         else:
-            assert(actual and predicted)
+            assert (actual and predicted)
             self.tt += 1
 
     def update(self, actuals, predicteds):
@@ -45,7 +46,7 @@ class ConfusionMatrix(object):
 
     def get_percentages(self):
         total = self.ff + self.ft + self.tf + self.tt
-        assert(total > 0)
+        assert (total > 0)
         matrix = ConfusionMatrix()
         matrix.ff = float(self.ff) / total
         matrix.ft = float(self.ft) / total
@@ -58,6 +59,7 @@ class ConfusionMatrix(object):
 
     def __repr__(self):
         return self.__str__()
+
 
 class FloatConfusionMatrix(object):
     def __init__(self):
@@ -74,7 +76,7 @@ class FloatConfusionMatrix(object):
         elif actual and (not predicted):
             self.tf.append(logit)
         else:
-            assert(actual and predicted)
+            assert (actual and predicted)
             self.tt.append(logit)
 
     def update(self, actuals, predicteds, logits):

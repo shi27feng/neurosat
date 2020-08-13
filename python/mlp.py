@@ -17,6 +17,7 @@ import numpy as np
 import tensorflow as tf
 from util import decode_transfer_fn
 
+
 def init_ws_bs(opts, name, d_in, d_outs):
     ws = []
     bs = []
@@ -25,11 +26,13 @@ def init_ws_bs(opts, name, d_in, d_outs):
     with tf.variable_scope(name) as scope:
         for i, d_out in enumerate(d_outs):
             with tf.variable_scope('%d' % i) as scope:
-                ws.append(tf.get_variable(name="w", shape=[d, d_out], initializer=tf.contrib.layers.xavier_initializer()))
+                ws.append(
+                    tf.get_variable(name="w", shape=[d, d_out], initializer=tf.contrib.layers.xavier_initializer()))
                 bs.append(tf.get_variable(name="b", shape=[d_out], initializer=tf.zeros_initializer()))
             d = d_out
 
-    return (ws, bs)
+    return ws, bs
+
 
 class MLP(object):
     def __init__(self, opts, d_in, d_outs, name):
